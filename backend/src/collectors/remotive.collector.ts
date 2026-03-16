@@ -2,7 +2,9 @@ import axios from 'axios';
 import { NormalizedJob, RemotiveResponse } from '../types';
 import { extractSkillsFromText } from './skills.extractor';
 
-const REMOTIVE_URL = 'https://remotive.io/api/remote-jobs';
+// remotive.io can intermittently return Cloudflare 526 in some regions.
+// remotive.com serves the same API path and is currently stable.
+const REMOTIVE_URL = 'https://remotive.com/api/remote-jobs';
 
 export async function fetchRemotiveJobs(): Promise<NormalizedJob[]> {
   const response = await axios.get<RemotiveResponse>(REMOTIVE_URL, {
