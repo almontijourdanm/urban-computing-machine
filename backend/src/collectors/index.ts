@@ -3,17 +3,33 @@ import { fetchArbeitnowJobs } from './arbeitnow.collector';
 import { enqueueJob } from '../queues/job.queue';
 import { NormalizedJob } from '../types';
 
+type SourceResult = {
+  source: 'remotive' | 'arbeitnow';
+  jobs: NormalizedJob[];
+};
+
 export async function collectAllJobs(): Promise<void> {
   console.log('[Collector] Polling external APIs...');
 
-  const results = await Promise.allSettled([fetchRemotiveJobs(), fetchArbeitnowJobs()]);
+  const results = await Promise.allSettled<SourceResult>([
+    fetchRemotiveJobs().then((jobs) => ({ source: 'remotive' as const, jobs })),
+    fetchArbeitnowJobs().then((jobs) => ({ source: 'arbeitnow' as const, jobs })),
+  ]);
 
   const allJobs: NormalizedJob[] = [];
   for (const result of results) {
     if (result.status === 'fulfilled') {
-      allJobs.push(...result.value);
+      allJobs.push(...result.value.jobs);
     } else {
-      console.warn('[Collector] A source failed:', result.reason?.message);
+      const source = result.reason?.config?.url?.includes('arbeitnow')
+        ? 'arbeitnow'
+        : 'remotive';
+      const status = result.reason?.response?.status;
+      const code = result.reason?.code;
+      const message = result.reason?.message || 'Unknown collector error';
+      console.warn(
+        `[Collector] Source failed (${source})${status ? ` status=${status}` : ''}${code ? ` code=${code}` : ''}: ${message}`
+      );
     }
   }
 

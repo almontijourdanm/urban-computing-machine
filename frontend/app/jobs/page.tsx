@@ -19,7 +19,7 @@ export default async function JobsPage() {
   return (
     <>
       <Header title="Job Listings" />
-      <main className="flex-1 overflow-y-auto p-6">
+      <main className="flex-1 min-h-0 overflow-y-auto p-6">
         <Card title="All Jobs" badge={`${total} total`}>
           <div className="space-y-2">
             {jobs.length === 0 ? (
