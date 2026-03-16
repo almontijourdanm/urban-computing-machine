@@ -19,7 +19,7 @@ export default async function SkillsPage() {
   return (
     <>
       <Header title="Skill Demand" />
-      <main className="flex-1 overflow-y-auto p-6 space-y-6">
+      <main className="flex-1 min-h-0 overflow-y-auto p-6 space-y-6">
 
         <Card title="Top 20 In-Demand Skills" badge={`${skills.length} tracked`}>
           <TopSkillsChart initialData={skills} />

@@ -23,7 +23,7 @@ export default async function TrendsPage() {
   return (
     <>
       <Header title="Market Trends" />
-      <main className="flex-1 overflow-y-auto p-6 space-y-6">
+      <main className="flex-1 min-h-0 overflow-y-auto p-6 space-y-6">
 
         <Card title="Salary Trends — Past 30 Days">
           <SalaryTrendChart data={salaryTrends} />
