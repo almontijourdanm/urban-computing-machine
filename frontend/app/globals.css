@@ -42,3 +42,19 @@ body {
   to   { opacity: 1; transform: translateX(0); }
 }
 .slide-in { animation: slide-in 0.25s ease-out; }
+
+@keyframes title-glide {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(10px); }
+}
+
+.moving-title {
+  display: inline-block;
+  animation: title-glide 3.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moving-title {
+    animation: none;
+  }
+}

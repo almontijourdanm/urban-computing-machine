@@ -13,7 +13,7 @@ export function Header({ title }: HeaderProps) {
     <header className="h-14 bg-terminal-panel border-b border-terminal-border flex items-center justify-between px-6 flex-shrink-0">
       <div className="flex items-center gap-2">
         <span className="text-terminal-accent text-xs tracking-widest font-mono">▶</span>
-        <h1 className="text-sm font-semibold text-terminal-text tracking-wide uppercase">
+        <h1 className="text-sm font-semibold text-terminal-text tracking-wide uppercase moving-title">
           {title}
         </h1>
       </div>
