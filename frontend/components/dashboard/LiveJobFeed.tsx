@@ -22,7 +22,7 @@ export function LiveJobFeed({ initialJobs }: LiveJobFeedProps) {
   }
 
   return (
-    <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
+    <div className="space-y-2 max-h-[570px] overflow-y-auto pr-1">
       {jobs.map((job, index) => (
         <JobCard key={job.id} job={job} isNew={index === 0} />
       ))}

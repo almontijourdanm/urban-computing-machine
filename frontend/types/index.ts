@@ -8,6 +8,7 @@ export interface Job {
   source: 'remotive' | 'arbeitnow';
   url?: string;
   created_at: string;
+  ingested_at?: string;
 }
 
 export interface TopSkill {
