@@ -10,6 +10,7 @@ export interface NormalizedJob {
   source: 'remotive' | 'arbeitnow';
   url: string;
   created_at: string;
+  ingested_at?: string;
 }
 
 // ── Analytics response shapes ─────────────────────────────────

@@ -18,10 +18,10 @@ export async function getJobs(
 
   const [jobsRes, countRes] = await Promise.all([
     pool.query<NormalizedJob>(
-      `SELECT id, title, company, skills, salary, location, source, url, created_at
+      `SELECT id, title, company, skills, salary, location, source, url, created_at, ingested_at
        FROM jobs
        ${hasFilter ? 'WHERE source = $3' : ''}
-       ORDER BY created_at DESC
+       ORDER BY ingested_at DESC, created_at DESC
        LIMIT $1 OFFSET $2`,
       hasFilter ? [pageSize, offset, source] : [pageSize, offset]
     ),
