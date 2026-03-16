@@ -29,10 +29,17 @@ export async function initializeDatabase(): Promise<void> {
         location     VARCHAR(255),
         source       VARCHAR(50)   NOT NULL,
         url          TEXT,
-        created_at   TIMESTAMPTZ   NOT NULL DEFAULT NOW()
+        created_at   TIMESTAMPTZ   NOT NULL DEFAULT NOW(),
+        ingested_at  TIMESTAMPTZ   NOT NULL DEFAULT NOW()
       );
 
+      ALTER TABLE jobs ADD COLUMN IF NOT EXISTS ingested_at TIMESTAMPTZ;
+      ALTER TABLE jobs ALTER COLUMN ingested_at SET DEFAULT NOW();
+      UPDATE jobs SET ingested_at = NOW() WHERE ingested_at IS NULL;
+      ALTER TABLE jobs ALTER COLUMN ingested_at SET NOT NULL;
+
       CREATE INDEX IF NOT EXISTS idx_jobs_created_at ON jobs (created_at DESC);
+      CREATE INDEX IF NOT EXISTS idx_jobs_ingested_at ON jobs (ingested_at DESC);
       CREATE INDEX IF NOT EXISTS idx_jobs_source     ON jobs (source);
       CREATE INDEX IF NOT EXISTS idx_jobs_skills     ON jobs USING gin (skills);
       CREATE INDEX IF NOT EXISTS idx_jobs_company    ON jobs (company);
